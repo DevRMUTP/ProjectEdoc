@@ -1,0 +1,13 @@
+.tree-leaf { position: relative; font-size:16px }
+.tree-leaf-content{margin-left: 40px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+.tree-leaf .tree-child-leaves { display: block; margin-left: 30px; }
+.tree-leaf .hidden { display: none; }
+.tree-leaf .flow-status{position: absolute;top: 2px;left: 24px;color: #ffb651;}
+.tree-leaf .recieve-date{margin-left: 4px;}
+.tree-leaf .tree-expando { background: #ddd; border-radius: 3px; cursor: pointer; height: 12px; line-height: 12px; position: absolute; text-align: center; top: 5px; left:0; width: 12px; }
+.tree-leaf .hidden { visibility: hidden; }
+.tree-leaf .tree-expando:hover { background: #aaa; }
+.tree-leaf .tree-leaf-text { color: #424242; cursor: pointer; float: left; margin-left: 5px; }
+.tree-leaf .tree-leaf-text:hover { color: blue; }
+.tree-leaf .tree-leaf-content:before, .tree-leaf .tree-leaf-content:after { content: " "; display: table; }
+.tree-leaf .tree-leaf-content:after { clear: both; }

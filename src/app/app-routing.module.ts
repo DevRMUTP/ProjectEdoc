@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: 'litsbook', loadChildren: './litsbook/litsbook.module#LitsbookPageModule' },
   { path: 'filter', loadChildren: './filter/filter.module#FilterPageModule' },
   { path: 'detailedoc', loadChildren: './detailedoc/detailedoc.module#DetailedocPageModule' },
+  { path: 'tree', loadChildren: './tree/tree.module#TreePageModule' },
 ];
 
 @NgModule({

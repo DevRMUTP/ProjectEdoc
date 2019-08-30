@@ -293,7 +293,7 @@ export class TreePage implements OnInit {
               this.addTreeNode(selectNode.children, log.reciever);
             }else{
               node.push({
-                name: sender, children:[]
+                name: sender,RecieveDate:new Date().toLocaleString(), children:[]
               });
               this.addTreeNode(node[node.length-1].children, log.reciever);
             }
@@ -306,10 +306,10 @@ export class TreePage implements OnInit {
               // var selectNode = this.findSenderNode(node, sender);
               // console.log(sender);
               // console.log(selectNode);
-              selectNode.children.push({name:log.reciever, children:[]});
+              selectNode.children.push({name:log.reciever,RecieveDate:new Date().toLocaleString(), children:[]});
             }else{
               node.push({
-                name: sender, children:[ {name:log.reciever, RecieveDate:new Date(), children:[]} ]
+                name: sender, children:[ {name:log.reciever, RecieveDate:new Date().toLocaleString(), children:[]} ]
               });
             }
 

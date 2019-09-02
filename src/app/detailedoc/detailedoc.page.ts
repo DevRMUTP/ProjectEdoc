@@ -47,6 +47,19 @@ export class DetailedocPage implements OnInit {
   }
 
   ngOnInit() {
+    this.Loaddata();
+  }
+
+  goback() {
+    console.log(this.docflow);
+    // this.navCtrl.back();
+  }
+
+  async Loaddata() {
+    const loading = await this.loadingController.create({
+      message: 'Loading...',
+    });
+    await loading.present();
     this.storage.get('docflow').then((parameter) => {
       this.docflow = parameter;
 
@@ -61,22 +74,14 @@ export class DetailedocPage implements OnInit {
           console.log(this.docdetail);
           console.log(this.doctree);
           console.log(this.doccomment);
+          loading.dismiss();
         }, error => {
           console.log(error);
+          loading.dismiss();
+          this.navCtrl.back();
         });
     });
-  }
-
-  goback() {
-    console.log(this.docflow);
-    // this.navCtrl.back();
-  }
-
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      message: 'Loading...',
-    });
-    await loading.present();
+    
 
   }
 

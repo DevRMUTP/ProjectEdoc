@@ -52,8 +52,9 @@ export class AppComponent {
       this.UserData = val;
       console.log(val);
       console.log('Load remem user is seccers')
-      this.UserData.Remember = false;
-      this.storage.set('UserData', this.UserData);
+      // this.UserData.Remember = false;
+      // this.storage.set('UserData', this.UserData);
+      this.storage.remove("UserData");
       this.router.navigateByUrl("/login");
       loading.dismiss();
     });

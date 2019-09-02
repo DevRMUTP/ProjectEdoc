@@ -12,7 +12,7 @@ import { MenuController,NavController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  UserData = { 'username': "", 'password': "", 'Remember': false };
+  UserData = { username: "", password: "", Remember: false };
 
   //http: any;
   constructor(
@@ -54,9 +54,11 @@ export class LoginPage implements OnInit {
     //   console.log('Remove Sccsecs');
     // }
     // console.log(this.UserData);    
-    this.storage.get('UserData').then((val) => {      
-        this.UserData = val;
-        console.log(val);
+    this.storage.get('UserData').then((val) => { 
+        if (val != null )
+        {
+          this.UserData = val;
+        }
         console.log('Load remem user is seccers')
         if (this.UserData.username != "" && this.UserData.password != "" && this.UserData.Remember == true) {
           this.Login();

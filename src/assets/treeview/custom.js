@@ -89,7 +89,8 @@
             text.textContent = item.name;
             status.setAttribute('class', 'flow-status');
             status.innerHTML = '<ion-icon name="mail"></ion-icon>';
-            //<ion-icon name="mail-open"></ion-icon>
+            //status.setAttribute('class', 'flow-status-read');
+            //status.innerHTML='<ion-icon name="mail-open"></ion-icon>';
             timestamp.setAttribute('class', 'recieve-date');
             timestamp.textContent = item.RecieveDate;
             expando.setAttribute('class', 'tree-expando ' + (item.expanded ? 'expanded' : ''));

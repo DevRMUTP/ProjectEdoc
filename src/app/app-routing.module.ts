@@ -9,6 +9,11 @@ const routes: Routes = [
   { path: 'filter', loadChildren: './filter/filter.module#FilterPageModule' },
   { path: 'detailedoc', loadChildren: './detailedoc/detailedoc.module#DetailedocPageModule' },
   { path: 'tree', loadChildren: './tree/tree.module#TreePageModule' },
+  { path: 'forworddoc', loadChildren: './forworddoc/forworddoc.module#ForworddocPageModule' },
+  { path: 'forwarddoc', loadChildren: './forwarddoc/forwarddoc.module#ForwarddocPageModule' },
+
+  
+
 ];
 
 @NgModule({

@@ -1,65 +1,132 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="rmutpcolor">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>รายละเอียด</ion-title>
+    <ion-title>{{docdetail.Docname}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <!-- detail card -->
-  <ion-card color="slategray">
+  <ion-card color="white" button (click)="hidedetail()">
     <ion-card-content>
-      <ion-row justify-content-around>
-        <ion-chip color="success" *ngIf="docdetail.Hast=='ปกติ'" mode='ios'>
-          <ion-label>ปกติ</ion-label>
-        </ion-chip>
-        <ion-chip color="warning" *ngIf="docdetail.Hast=='ด่วน'" mode='ios'>
-          <ion-icon name="warning"></ion-icon>
-          <ion-label>ด่วน</ion-label>
-        </ion-chip>
-        <ion-chip color="orange" *ngIf="docdetail.Hast=='ด่วนมาก'" mode='ios'>
-          <ion-icon name="warning"></ion-icon>
-          <ion-label>ด่วนมาก</ion-label>
-        </ion-chip>
-        <ion-chip color="danger" *ngIf="docdetail.Hast=='ด่วนที่สุด'" mode='ios'>
-          <ion-icon name="warning"></ion-icon>
-          <ion-label>ด่วนที่สุด</ion-label>
-        </ion-chip>
+      <ion-row>
+        <ion-col size="8">
+          <small>เลขที่หนังสือ</small><br>
+          <strong>{{docdetail.DocNumber}}</strong>
+        </ion-col>
+        <ion-col size="4">
+          <ion-chip color="success" *ngIf="docdetail.Hast=='ปกติ'" mode='ios' style="float:right;">
+            <ion-label>ปกติ</ion-label>
+          </ion-chip>
+          <ion-chip color="warning" *ngIf="docdetail.Hast=='ด่วน'" mode='ios' style="float:right;">
+            <ion-icon name="warning"></ion-icon>
+            <ion-label>ด่วน</ion-label>
+          </ion-chip>
+          <ion-chip color="orange" *ngIf="docdetail.Hast=='ด่วนมาก'" mode='ios' style="float:right;">
+            <ion-icon name="warning"></ion-icon>
+            <ion-label>ด่วนมาก</ion-label>
+          </ion-chip>
+          <ion-chip color="danger" *ngIf="docdetail.Hast=='ด่วนที่สุด'" mode='ios' style="float:right;font-size: 12px">
+            <ion-icon name="warning"></ion-icon>
+            <ion-label>ด่วนที่สุด</ion-label>
+          </ion-chip>
+        </ion-col>
       </ion-row>
-      <h2>เลขที่หนังสือ : {{docdetail.DocNumber}}</h2>
-      <h2>เรื่อง : {{docdetail.Docname}}</h2>
-      <h3>วันที่หนังสือ : {{docdetail.Docdate}}</h3>
-      <h3>รับวันที่ : {{docdetail.DocRegisdate}}</h3>
-      <h3>ดำเนินการให้แล้วเสร็จในวันที่ : {{docdetail.DocExcutedate}}</h3>
-      <h3>เลขที่ : {{doctree[0].SentNo}}</h3>
+      <ion-row *ngIf="showdetail">
+        <ion-col size="12">
+          <small>เรื่อง</small><br>
+          <strong>{{docdetail.Docname}}</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-center *ngIf="!showdetail">
+        <ion-icon name="arrow-down" style="color:#bababa;font-size: 20px" mode="ios"></ion-icon>
+      </ion-row>
+      <ion-row *ngIf="showdetail">
+        <ion-col size="6">
+          <small>รับวันที่</small><br>
+          <strong>{{docdetail.DocRegisdate}}</strong>
+        </ion-col>
+        <ion-col size="6">
+          <small>ดำเนินการให้แล้วเสร็จในวันที่</small><br>
+          <strong>{{docdetail.DocExcutedate}}</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-center *ngIf="showdetail">
+        <h4>
+          <ion-icon name="arrow-up" style="color:#bababa;font-size: 20px" mode="ios"></ion-icon>
+        </h4>
+      </ion-row>
+
     </ion-card-content>
   </ion-card>
   <!-- Tree card -->
-  <ion-row justify-content-around>
-    <h4>เส้นทางการส่งหนังสือ</h4>
-  </ion-row>
   <ion-card>
     <ion-card-content>
       Tree
     </ion-card-content>
   </ion-card>
   <!-- comment card -->
-  <ion-row justify-content-around>
-    <h4>ข้อความ สิ่งที่ส่งมาด้วยและเอกสารอ้างอิงเพิ่มเติม</h4>
-  </ion-row>
-  <ion-card>
-    <ion-list>
-      <ion-item *ngFor="let edata of doccomment">
-        <p *ngIf="edata.SentByName != '  ()'">จาก : {{edata.SentByName}}</p>
-        <p *ngIf="edata.SentByName == '  ()'">จาก : {{edata.SentByAccount}}</p>
-        <p>เรียน : {{edata.Dear}}</p>
-        <p>ลงวันที่ : {{functionservice.datethai(edata.SentCommentDate)}}</p>
-        <p>ข้อความ : {{edata.SentComment}}</p>
-      </ion-item>
-    </ion-list>
+  <ion-card *ngFor="let edata of doccomment" color="light">
+    <ion-card-content>
+      <ion-row>
+        <ion-col size="12">
+          <small>จาก</small><br>
+          <strong *ngIf="edata.SentByName != '  ()'">{{edata.SentByName}}</strong>
+          <strong *ngIf="edata.SentByName == '  ()'">{{edata.SentByAccount}}</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="8">
+          <small>เรียน</small><br>
+          <strong *ngIf="edata.Dear != ''">{{edata.Dear}}</strong>
+          <strong *ngIf="edata.Dear == ''">-</strong>
+        </ion-col>
+        <ion-col size="4">
+          <small>ลงวันที่</small><br>
+          <strong>{{functionservice.datethai(edata.SentCommentDate)}}</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <small>ข้อความ</small><br>
+          <strong *ngIf="edata.SentComment != ''">{{edata.SentComment}}</strong>
+          <strong *ngIf="edata.SentComment == '' && edata.Status != ''">{{edata.Status}}</strong>
+          <strong *ngIf="edata.SentComment == '' && edata.Status == ''">-</strong>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
   </ion-card>
-
 </ion-content>
 
+<!-- footer -->
+<ion-footer>
+  <ion-toolbar>
+    <ion-tabs>
+
+      <ion-tab-bar slot="bottom">
+        <!-- <ion-tab-button (click)="forwarddoc()" component>
+          <ion-icon name="send" color="dark"></ion-icon>
+          <ion-label color="dark">ลทป/ส่งต่อ/ดำเนินการ</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button>
+          <ion-icon name="rewind" color="dark"></ion-icon>
+          <ion-label color="dark">ส่งกลับ</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button>
+          <ion-icon name="save" color="dark"></ion-icon>
+          <ion-label color="dark">เก็บหลักฐาน</ion-label>
+        </ion-tab-button> -->
+
+        <ion-tab-button (click)="functionservice.download(docflow.DocOID)">
+          <ion-icon name="document" color="dark"></ion-icon>
+          <ion-label color="dark">Open Document</ion-label>
+        </ion-tab-button>
+
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>

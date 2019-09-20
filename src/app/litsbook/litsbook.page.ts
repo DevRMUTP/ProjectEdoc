@@ -20,6 +20,7 @@ import { testUserAgent } from '@ionic/core/dist/types/utils/platform';
 
 })
 export class LitsbookPage implements OnInit {
+  // fileTransfer: FileTransferObject;
   constructor(
     private storage: Storage,
     public http: HttpClient,
@@ -27,9 +28,10 @@ export class LitsbookPage implements OnInit {
     public navCtrl: NavController,
     public loadingController: LoadingController,
     public datepipe: DatePipe,
-    public modalController: ModalController
+    public modalController: ModalController   
     // public navParams: NavParams
   ) { }
+
   UserData: any;
   edocdata: any;
   inputevent: any;
@@ -40,6 +42,7 @@ export class LitsbookPage implements OnInit {
   todate: any;
   docflow: any;
   loading: any;
+
 
   ngOnInit() {
     this.storage.get('UserData').then((val) => {
@@ -135,14 +138,40 @@ export class LitsbookPage implements OnInit {
     }
   }
 
-  async presentLoading() {
+  
 
-    const loading = await this.loadingController.create({
-      message: 'Loading...',
-    });
-    await loading.present();
-    
 
-  }
+  // download(DocOID: any) {
+  //   let postData = new FormData();
+  //   postData.append("DocOID", DocOID);
+  //   this.http.post("https://app.rmutp.ac.th/api/edoc/docfile", postData)
+  //     .subscribe(data => {
+        
+  //     }, error => {
+  //       console.log(error);
+  //     });       
+  // }
+
+  // async presentLoading() {
+
+  //   const loading = await this.loadingController.create({
+  //     message: 'Loading...',
+  //   });
+  //   await loading.present();
+
+
+  // }
+
+  // download() {
+  //   const fileTransfer: FileTransferObject = this.transfer.create();
+  //   const url = 'http://edoc.rmutp.ac.th/upload_file/';
+  //   fileTransfer.download(url, this.file.dataDirectory + 'file.pdf').then((entry) => {
+  //     console.log('download complete: ' + entry.toURL());
+  //   }, (error) => {
+  //     // handle error
+  //   });
+  // }
+
+  
+  
 }
-

@@ -13,12 +13,13 @@
               <ion-label position="stacked"><strong>USERNAME</strong></ion-label>
               <ion-input type="text" maxlength=22 [(ngModel)]="UserData.username" required></ion-input>
             </ion-item>
-            <ion-item  style="margin-bottom: 10px;">
+            <ion-item style="margin-bottom: 10px;">
               <ion-label position="stacked"><strong>PASSWORD</strong></ion-label>
-              <ion-input type="password" maxlength=24 [(ngModel)]="UserData.password" required></ion-input>
+              <ion-input type="password" maxlength=24 [(ngModel)]="UserData.password" required>                
+              </ion-input>              
             </ion-item>
             <ion-item style="width: 170px; --border-color:#ffffff !important;">
-              <ion-checkbox  [(ngModel)]="UserData.Remember" color="light" mode="md"></ion-checkbox>
+              <ion-checkbox [(ngModel)]="UserData.Remember" color="light" mode="md"></ion-checkbox>
               <ion-label style="padding-left: 5px;"><strong>Auto Login</strong> </ion-label>
             </ion-item>
             <ion-button expand="block" color="tertiary" (click)="Login()"><strong>Login</strong></ion-button>

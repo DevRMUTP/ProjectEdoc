@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component , ViewChild } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { Platform, MenuController, NavController,LoadingController } from '@ionic/angular';
+import { Platform, MenuController, NavController,LoadingController,IonRouterOutlet,AlertController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  @ViewChild(IonRouterOutlet) routerOutlet: IonRouterOutlet;
 
   public appPages = [    
     {
@@ -27,9 +28,43 @@ export class AppComponent {
     private router: Router,
     public menuCtrl: MenuController,
     public navCtrl: NavController,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    private alertCtrl: AlertController
   ) {
     this.initializeApp();
+
+    this.platform.backButton.subscribe(() => {
+      if (this.routerOutlet && this.routerOutlet.canGoBack()) {
+        this.routerOutlet.pop();
+      } else if (this.router.url === '/tabs/tab3') {
+        navigator['app'].exitApp()
+      } else {
+        this.presentAlertConfirm()
+      }
+    });
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertCtrl.create({
+      header: 'Confirm!',
+      message: 'Do you want to exit the app?',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+            navigator['app'].exitApp()
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   Logout: any;
@@ -59,5 +94,7 @@ export class AppComponent {
       loading.dismiss();
     });
   }
+
+  
 
 }

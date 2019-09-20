@@ -6,13 +6,14 @@ import { Storage } from '@ionic/storage';
 import { MenuController,NavController } from '@ionic/angular';
 
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  UserData = { username: "", password: "", Remember: false };
+  UserData = { username: "", password: "", Remember: false };  
 
   //http: any;
   constructor(
@@ -114,5 +115,5 @@ export class LoginPage implements OnInit {
     });
 
     await alert.present();
-  }
+  }  
 }

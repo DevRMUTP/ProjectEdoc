@@ -25,18 +25,28 @@
     --ion-color-tint: var(--ion-color-orange-tint);
   }
 
+  .ion-color-rmutpcolor {
+    --ion-color-base: var(--ion-color-rmutpcolor);
+    --ion-color-base-rgb: var(--ion-color-rmutpcolor-rgb);
+    --ion-color-contrast: var(--ion-color-rmutpcolor-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-rmutpcolor-contrast-rgb);
+    --ion-color-shade: var(--ion-color-rmutpcolor-shade);
+    --ion-color-tint: var(--ion-color-rmutpcolor-tint);
+  }
+
   .orange {
     --background-color: blanchedalmond; 
   }
 
   .ioconedoc  {
-    max-width: 100%;
-    max-height: 100%;
-    width: 35px;
-    height: auto;    
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+    font-size: 30px;
+    position: absolute;
+    top: auto;
+    left: auto;
+    }
+
+  .fontthick {
+      font-weight: bold;
     }
 
   .datepicker{
@@ -50,4 +60,8 @@
 
   .readcolor{
     --ion-background-color: #f4f4f4;
+  }
+
+  .headder{
+    --background: darkorchid
   }

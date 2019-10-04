@@ -12,7 +12,7 @@ import { FunctionService } from '../services/function.service';
   styleUrls: ['./detailedoc.page.scss'],
 })
 export class DetailedocPage implements OnInit {
-
+  showdetail: boolean;
   docflow: any;
   docdetail: any;
   doctree: any;
@@ -36,6 +36,7 @@ export class DetailedocPage implements OnInit {
     // If you have more than one side menu, use the id like below
     // this.menu.swipeEnable(false, 'menu1'); 
     this.storage.remove('docflow');
+    this.showdetail = false;
   }
   ionViewWillLeave() {
     // Don't forget to return the swipe to normal, otherwise 
@@ -47,6 +48,20 @@ export class DetailedocPage implements OnInit {
   }
 
   ngOnInit() {
+    this.docdetail = { Hast: null };
+    this.Loaddata();
+  }
+
+  goback() {
+    console.log(this.docflow);
+    // this.navCtrl.back();
+  }
+
+  async Loaddata() {
+    const loading = await this.loadingController.create({
+      message: 'Loading...',
+    });
+    await loading.present();
     this.storage.get('docflow').then((parameter) => {
       this.docflow = parameter;
 
@@ -61,23 +76,27 @@ export class DetailedocPage implements OnInit {
           console.log(this.docdetail);
           console.log(this.doctree);
           console.log(this.doccomment);
+          loading.dismiss();
         }, error => {
           console.log(error);
+          loading.dismiss();
+          this.navCtrl.back();
         });
     });
   }
 
-  goback() {
-    console.log(this.docflow);
-    // this.navCtrl.back();
+  hidedetail() {
+    if (this.showdetail == true) {
+      this.showdetail = false;
+    }
+    else {
+      this.showdetail = true;
+    }
   }
 
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      message: 'Loading...',
-    });
-    await loading.present();
-
+  forwarddoc(){
+    this.navCtrl.navigateForward("/forwarddoc");
   }
+
 
 }

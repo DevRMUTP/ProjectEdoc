@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "855317416744",
+    "firebase_url": "https://edocmobilermutp.firebaseio.com",
+    "project_id": "edocmobilermutp",
+    "storage_bucket": "edocmobilermutp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855317416744:android:5cae7112300c4bc5d79e1d",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855317416744-ioidu1sjil96h2p6gtl8fi3f07tv2v7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHaMcNg-MuLMbPiYBroxQSDl6-cidflZc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855317416744-ioidu1sjil96h2p6gtl8fi3f07tv2v7q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

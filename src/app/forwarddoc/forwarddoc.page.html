@@ -1,0 +1,123 @@
+<ion-header>
+  <ion-toolbar color="rmutpcolor">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>forwarddoc</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row justify-content-center>
+    <ion-col style="margin-top: 10px">
+      <mat-form-field class="full-width-field">
+        <input matInput [matDatepicker]="picker1" placeholder="วันที่ลง" [(ngModel)]="date.value" disabled>
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+      </mat-form-field>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="12">
+      <ion-item>
+        <ion-label position="floating">รายชื่อผู้รับ</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="auto">
+      <ion-item lines="none">
+        <ion-checkbox color="primary" slot="start"></ion-checkbox>
+        <ion-label>เวียนทุกคณะ</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-checkbox color="primary" slot="start"></ion-checkbox>
+        <ion-label>เวียนทุกกอง</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-checkbox color="primary" slot="start"></ion-checkbox>
+        <ion-label>เวียนทุกสำนัก</ion-label>
+      </ion-item>
+    </ion-col>
+
+    <ion-col size="auto" align-self-center>
+
+      <ion-item lines="none">
+        <ion-checkbox color="primary" slot="start"></ion-checkbox>
+        <ion-label>เวียนทุกสถานบัน</ion-label>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-checkbox color="primary" slot="start"></ion-checkbox>
+        <ion-label>เวียนทุกศูนย์</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="12">
+      <ion-item>
+        <ion-label position="floating">เรียน</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+      <ion-col size="6">
+        <ion-item lines="none">
+          <ion-checkbox color="primary" slot="start"></ion-checkbox>
+          <ion-label>ทราบ</ion-label>
+        </ion-item>
+  
+        <ion-item lines="none">
+          <ion-checkbox color="primary" slot="start"></ion-checkbox>
+          <ion-label>อนุญาต</ion-label>
+        </ion-item>
+  
+        <ion-item lines="none">
+          <ion-checkbox color="primary" slot="start"></ion-checkbox>
+          <ion-label>อนุมัติ</ion-label>
+        </ion-item>
+      </ion-col>
+  
+      <ion-col size="6" align-self-center>
+  
+        <ion-item lines="none">
+          <ion-checkbox color="primary" slot="start"></ion-checkbox>
+          <ion-label>มอบ</ion-label>
+        </ion-item>
+  
+        <ion-item lines="none">
+          <ion-checkbox color="primary" slot="start"></ion-checkbox>
+          <ion-label>จัดดังเสนอ</ion-label>
+        </ion-item>
+
+        <ion-item lines="none">
+            <ion-checkbox color="primary" slot="start"></ion-checkbox>
+            <ion-label>สั่งการ</ion-label>
+          </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center>
+        <ion-item lines="none">
+            <ion-checkbox color="primary" slot="start"></ion-checkbox>
+            <ion-label>ไม่ระบุ</ion-label>
+          </ion-item>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+          <ion-item>
+              <ion-label position="floating">Description</ion-label>
+              <ion-textarea autoGrow></ion-textarea>
+            </ion-item>
+      </ion-col>
+    </ion-row>
+
+</ion-content>

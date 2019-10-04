@@ -1,13 +1,14 @@
 <ion-header>
-  <ion-toolbar color="light">
+  <ion-toolbar color="rmutpcolor">
     <ion-buttons slot="start">
-      <ion-menu-button color="dark"></ion-menu-button>
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Listbook</ion-title>
-    <ion-button slot="end" fill='clear' color="dark" *ngIf="!isSearchbarOpened" (click)="isSearchbarOpened=true">
+    <ion-title>Inbox</ion-title>
+    <ion-button slot="end" fill='clear' color="light" *ngIf="!isSearchbarOpened" (click)="isSearchbarOpened=true">
       <ion-icon slot="icon-only" name="search"></ion-icon>
     </ion-button>
-    <ion-button slot="end" fill='clear' color="dark" *ngIf="isSearchbarOpened" (click)="isSearchbarOpened=false; clear()">
+    <ion-button slot="end" fill='clear' color="light" *ngIf="isSearchbarOpened"
+      (click)="isSearchbarOpened=false; clear()">
       <ion-icon slot="icon-only" name="close"></ion-icon>
     </ion-button>
   </ion-toolbar>
@@ -16,7 +17,8 @@
       <ion-col>
         <ion-item color="light">
           <ion-label>ค้นหาจาก</ion-label>
-          <ion-select cancelText="ยกเลิก" okText="ตกลง" name="searchsel" [(ngModel)]="searchtype" (ionChange)="clearform()">
+          <ion-select cancelText="ยกเลิก" okText="ตกลง" name="searchsel" [(ngModel)]="searchtype"
+            (ionChange)="clearform()">
             <ion-select-option value="Nodoc">เลขที่หนังสือ</ion-select-option>
             <ion-select-option value="Namedoc">เรื่อง</ion-select-option>
             <ion-select-option value="date">วันที่</ion-select-option>
@@ -26,8 +28,9 @@
     </ion-row>
     <ion-row *ngIf="searchtype!='date'">
       <ion-col>
-        <ion-item style="padding-bottom: 5px" color="light">          
-          <ion-input placeholder="ค้นหา" (ionChange)="onChangeinputsearch($event)" clearInput='true' [(ngModel)]="inputevent"></ion-input>
+        <ion-item style="padding-bottom: 5px" color="light">
+          <ion-input placeholder="ค้นหา" (ionChange)="onChangeinputsearch($event)" clearInput='true'
+            [(ngModel)]="inputevent"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -54,7 +57,8 @@
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-button (click)="clear()" style="margin-left: auto; margin-right: auto;margin-bottom: 10px" color="tertiary">
+        <ion-button (click)="clear()" style="margin-left: auto; margin-right: auto;margin-bottom: 10px"
+          color="tertiary">
           Clear
         </ion-button>
       </ion-row>
@@ -62,10 +66,16 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-list>
-    <ion-item button *ngFor="let edata of edocdata" (click)="godocflow(edata.DocFlowOID,edata.DocOID,edata.DocCreateByAccount)" mode='ios' animated lines='full' [ngClass]="{'readcolor': edata.FlowStatus=='ReadForword'||edata.FlowStatus=='Read'||edata.FlowStatus=='ReadBackCritical'||edata.FlowStatus=='ReadBack'}">
-      <ion-thumbnail slot="start">
-        <img src="../../assets/edocicon/unreadback.png" class="ioconedoc" *ngIf="edata.FlowStatus=='SendBack'">
+    <ion-item-sliding *ngFor="let edata of edocdata">
+      <ion-item button (click)="godocflow(edata.DocFlowOID,edata.DocOID,edata.DocCreateByAccount)" mode='ios' animated
+        lines='full'
+        [ngClass]="{'readcolor': edata.FlowStatus=='ReadForword'||edata.FlowStatus=='Read'||edata.FlowStatus=='ReadBackCritical'||edata.FlowStatus=='ReadBack'}">
+        <ion-avatar slot="start">
+          <!-- <img src="../../assets/edocicon/unreadback.png" class="ioconedoc" *ngIf="edata.FlowStatus=='SendBack'">
         <img src="../../assets/edocicon/unreadforward.png" class="ioconedoc" *ngIf="edata.FlowStatus=='SendForword'">
         <img src="../../assets/edocicon/unreadbackcritical.png" class="ioconedoc"
           *ngIf="edata.FlowStatus=='SendBackCritical'">
@@ -75,35 +85,49 @@
         <img src="../../assets/edocicon/readforward.png" class="ioconedoc" *ngIf="edata.FlowStatus=='ReadForword'">
         <img src="../../assets/edocicon/readbackcritical.png" class="ioconedoc"
           *ngIf="edata.FlowStatus=='ReadBackCritical'">
-        <img src="../../assets/edocicon/read.png" class="ioconedoc" *ngIf="edata.FlowStatus=='Read'">
-      </ion-thumbnail>
-      <ion-label>
-        <h2>{{edata.DocName}}</h2>
-        <ion-chip slot="start" mode="ios">            
-            <ion-label>{{edata.DocNumber}}</ion-label>
-        </ion-chip>
-        <ion-chip mode="ios">
-            <ion-icon name="calendar"></ion-icon>
-          <ion-label>{{functionservice.datethai(edata.SentDate)}}</ion-label>
-        </ion-chip>         
-        <p>{{edata.SentByName}}</p>
-        
-        <ion-chip color="success" *ngIf="edata.Hast=='ปกติ'" slot="start" mode='ios'>
-          <ion-label>ปกติ</ion-label>
-        </ion-chip>
-        <ion-chip color="warning" *ngIf="edata.Hast=='ด่วน'" slot="start" mode='ios'>
-          <ion-icon name="warning"></ion-icon>
-          <ion-label>ด่วน</ion-label>
-        </ion-chip>
-        <ion-chip color="orange" *ngIf="edata.Hast=='ด่วนมาก'" slot="start" mode='ios'>
-          <ion-icon name="warning"></ion-icon>
-          <ion-label>ด่วนมาก</ion-label>
-        </ion-chip>
-        <ion-chip color="danger" *ngIf="edata.Hast=='ด่วนที่สุด'" slot="start" mode='ios'>
-          <ion-icon name="warning"></ion-icon>
-          <ion-label>ด่วนที่สุด</ion-label>
-        </ion-chip>
-      </ion-label>
-    </ion-item>
+        <img src="../../assets/edocicon/read.png" class="ioconedoc" *ngIf="edata.FlowStatus=='Read'"> -->
+          <ion-icon name="mail" class="ioconedoc" style="color: #ff8300"
+            *ngIf="edata.FlowStatus=='SendBack'||edata.FlowStatus=='SendForword'||edata.FlowStatus=='Send'||edata.FlowStatus=='SendBackCritical'">
+          </ion-icon>
+          <ion-icon name="mail-open" class="ioconedoc" style="color: #808080"
+            *ngIf="edata.FlowStatus=='ReadBack'||edata.FlowStatus=='ReadForword'||edata.FlowStatus=='ReadBackCritical'||edata.FlowStatus=='Read'">
+          </ion-icon>
+        </ion-avatar>
+        <ion-label>
+          <ion-row>
+            <ion-col size="9">
+              <small>
+                {{edata.DocNumber}} <ion-icon name="alert" color="warning" *ngIf="edata.Hast=='ด่วน'"></ion-icon>
+                <ion-icon name="alert" color="orange" *ngIf="edata.Hast=='ด่วนมาก'"></ion-icon>
+                <ion-icon name="alert" color="danger" *ngIf="edata.Hast=='ด่วนที่สุด'"></ion-icon>
+              </small>
+            </ion-col>
+            <ion-col size="3">
+              <small style="float: right">{{functionservice.datethai(edata.DocDate)}}</small>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <h3
+                [ngClass]="{'fontthick': edata.FlowStatus=='SendBack'||edata.FlowStatus=='SendForword'||edata.FlowStatus=='Send'||edata.FlowStatus=='SendBackCritical'}">
+                {{edata.DocName}}
+              </h3>
+            </ion-col>
+          </ion-row>
+        </ion-label>
+      </ion-item>
+      <!-- side left -->
+      <ion-item-options side="start">
+        <ion-item-option (click)="functionservice.download(edata.DocOID)">
+          <ion-icon name="document" style="font-size: 30px"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <!-- side right -->
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="DeleteEdocConfirm(edata.DocOID,UserData.username)">
+          <ion-icon name="trash" style="font-size: 30px"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
 </ion-content>

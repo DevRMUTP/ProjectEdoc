@@ -4,7 +4,6 @@ import { Platform, MenuController, NavController,LoadingController,IonRouterOutl
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
-import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +30,7 @@ export class AppComponent {
     public navCtrl: NavController,
     public loadingController: LoadingController,
     private alertCtrl: AlertController,
-    private fcm: FCM,
+    
   ) {
     this.initializeApp();
 

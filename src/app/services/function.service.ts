@@ -4,9 +4,10 @@ import { FileTransfer, FileTransferObject } from "@ionic-native/file-transfer/ng
 import { FileOpener } from "@ionic-native/file-opener/ngx";
 import { HttpClient } from '@angular/common/http';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { Platform , ToastController } from '@ionic/angular';
+import { Platform, ToastController, AlertController, LoadingController } from '@ionic/angular';
 import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer/ngx';
 import { present } from '@ionic/core/dist/types/utils/overlays';
+import { DataRowOutlet } from '@angular/cdk/table';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,8 @@ export class FunctionService {
     private iab: InAppBrowser,
     private platform: Platform,
     private document: DocumentViewer,
+    private alertCtrl: AlertController,
+    public loadingController: LoadingController,
     public toastController: ToastController
   ) { }
   m: any;
@@ -52,15 +55,15 @@ export class FunctionService {
 
   async download(DocOID: any) {
     const toast = await this.toastController.create({
-      message: 'Please wait for downloading.'      
+      message: 'Please wait for downloading.'
     });
-    toast.present();
+
 
     let postData = new FormData();
     postData.append("DocOID", DocOID);
     this.http.post("https://app.rmutp.ac.th/api/edoc/docfile", postData)
       .subscribe(data => {
-        
+        toast.present();
         let downloadUrl = "https://edoc.rmutp.ac.th/upload_file/" + data["Table"][0]["FilePath"];
         let path = this.file.dataDirectory;
         const fileTransfer: FileTransferObject = this.transfer.create();
@@ -79,17 +82,27 @@ export class FunctionService {
         });
 
       }, error => {
-        this.downloaderror();        
-        console.log(error);    
+        this.downloaderror();
+        console.log(error);
       });
-  } 
-
-  async downloaderror(){
+  }
+  
+  async downloaderror() {
     const toast = await this.toastController.create({
-      message: 'Please wait for downloading.',
+      message: 'Download Error!!.',
       duration: 3000
     });
-    toast.present();
-  }  
+    await toast.present();
+  }
+
+  async presentLoading() {
+
+    const loading = await this.loadingController.create({
+      message: 'Loading...',
+    });
+    await loading.present();
+
+
+  }
 
 }

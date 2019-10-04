@@ -4,6 +4,7 @@ import { Platform, MenuController, NavController,LoadingController,IonRouterOutl
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +30,8 @@ export class AppComponent {
     public menuCtrl: MenuController,
     public navCtrl: NavController,
     public loadingController: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private fcm: FCM,
   ) {
     this.initializeApp();
 
@@ -86,7 +88,7 @@ export class AppComponent {
     this.storage.get('UserData').then((val) => {
       this.UserData = val;
       console.log(val);
-      console.log('Load remem user is seccers')
+      console.log('logout')
       // this.UserData.Remember = false;
       // this.storage.set('UserData', this.UserData);
       this.storage.remove("UserData");

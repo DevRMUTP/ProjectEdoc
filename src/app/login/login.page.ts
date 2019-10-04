@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AlertController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
-import { MenuController,NavController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 
 
 
@@ -13,7 +13,7 @@ import { MenuController,NavController } from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  UserData = { username: "", password: "", Remember: false };  
+  UserData = { username: "", password: "", Remember: false };
 
   //http: any;
   constructor(
@@ -23,10 +23,10 @@ export class LoginPage implements OnInit {
     private storage: Storage,
     private Menu: MenuController,
     private navCtrl: NavController
-  ) { } 
+  ) { }
 
   ionViewDidEnter() {
-    this.Menu.enable(false);    
+    this.Menu.enable(false);
     // If you have more than one side menu, use the id like below
     // this.menu.swipeEnable(false, 'menu1');
   }
@@ -46,24 +46,14 @@ export class LoginPage implements OnInit {
     this.router.navigateByUrl('/litsbook');
   }
   ngOnInit() {
-    // this.route.params.subscribe(params => {
-    //   this.logout = params['logout'];
-    // });
-    // console.log(this.logout);
-    // if(this.logout == true){
-    //   this.storage.remove('UserData');
-    //   console.log('Remove Sccsecs');
-    // }
-    // console.log(this.UserData);    
-    this.storage.get('UserData').then((val) => { 
-        if (val != null )
-        {
-          this.UserData = val;
-        }
-        console.log('Load remem user is seccers')
-        if (this.UserData.username != "" && this.UserData.password != "" && this.UserData.Remember == true) {
-          this.Login();
-        }    
+    this.storage.get('UserData').then((val) => {
+      if (val != null) {
+        this.UserData = val;
+      }
+      console.log('Load data user is success')
+      if (this.UserData.username != "" && this.UserData.password != "" && this.UserData.Remember == true) {
+        this.Login();
+      }
     });
   }
 
@@ -75,19 +65,19 @@ export class LoginPage implements OnInit {
 
     console.log(this.UserData);
 
-    this.http.post("https://app.rmutp.ac.th/api/Login", postData)
+    this.http.post("https://app.rmutp.ac.th/api/LoginAuthEdoc", postData)
       .subscribe(data => {
         console.log(data);
         if (data['status'] == "Failed") {
           this.incorrectAlert();
         }
-        if (data['status'] == "OK" && data['company'] != "STUDENT") {
+        if (data['status'] == "OK" && data['usertype'] != "STUDENT") {
           this.storage.set('UserData', this.UserData);
           console.log(this.UserData);
           console.log('login!!');
           this.GoHomePage();
         }
-        if (data['status'] == "OK" && data['company'] == "STUDENT") {
+        if (data['status'] == "OK" && data['usertype'] == "STUDENT") {
           this.stdAlert();
         }
       }, error => {
@@ -115,5 +105,5 @@ export class LoginPage implements OnInit {
     });
 
     await alert.present();
-  }  
+  }
 }

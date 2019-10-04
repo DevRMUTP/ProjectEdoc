@@ -5,7 +5,7 @@ import { async } from 'q';
 import { HttpClient } from '@angular/common/http';
 import { FunctionService } from '../services/function.service';
 import { from } from 'rxjs';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { SPINNERS } from '@ionic/core/dist/types/components/spinner/spinner-configs';
 import { CdkTreeNodeOutletContext } from '@angular/cdk/tree';
 import { DatePipe } from '@angular/common';
@@ -28,7 +28,8 @@ export class LitsbookPage implements OnInit {
     public navCtrl: NavController,
     public loadingController: LoadingController,
     public datepipe: DatePipe,
-    public modalController: ModalController   
+    private alertCtrl: AlertController,
+    public modalController: ModalController
     // public navParams: NavParams
   ) { }
 
@@ -122,6 +123,17 @@ export class LitsbookPage implements OnInit {
     this.docflow = { DocFlowOid: DocFlowOID, DocOID: DocOID, DocCreateByAccount: DocCreateByAccount };
     this.storage.set('docflow', this.docflow);
     console.log(this.docflow);
+    let postData1 = new FormData();
+    postData1.append("DocOID", DocOID);
+    postData1.append("RecieveByAccount", this.UserData.username);
+    
+    this.http.post("https://app.rmutp.ac.th/api/edoc/updatedoceflowstatus", postData1)
+      .subscribe(data => {
+        console.log(data);
+        this.getedoc();
+      }, error => {
+        console.log(error);
+      });
     this.navCtrl.navigateForward('/detailedoc');
   }
 
@@ -138,7 +150,52 @@ export class LitsbookPage implements OnInit {
     }
   }
 
-  
+  async DeleteEdocConfirm(DocOID: any, RecievebyAccount: any) {
+    const loading = await this.loadingController.create({
+      message: 'Deleteing...',
+    });
+    const alert = await this.alertCtrl.create({
+      header: 'Confirm!',
+      message: 'ต้องการลบเอกการนี้หรือไม่ ?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Yes',
+          handler: () => {
+            loading.present();
+            console.log('Confirm Yes');
+            let postData1 = new FormData();
+            postData1.append("RecieveByAccount", RecievebyAccount);
+            postData1.append("DocOID", DocOID);
+            this.http.post("https://app.rmutp.ac.th/api/edoc/deleteEdoc", postData1)
+              .subscribe(data => {
+                console.log(data);
+                loading.dismiss();
+                this.getedoc();
+              }, error => {
+                console.log(error);
+                loading.dismiss();
+              });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  doRefresh(event) {
+    console.log('Begin async operation');
+    this.getedoc();
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
+
 
 
   // download(DocOID: any) {
@@ -146,7 +203,7 @@ export class LitsbookPage implements OnInit {
   //   postData.append("DocOID", DocOID);
   //   this.http.post("https://app.rmutp.ac.th/api/edoc/docfile", postData)
   //     .subscribe(data => {
-        
+
   //     }, error => {
   //       console.log(error);
   //     });       
@@ -172,6 +229,6 @@ export class LitsbookPage implements OnInit {
   //   });
   // }
 
-  
-  
+
+
 }

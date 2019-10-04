@@ -66,6 +66,9 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-list>
     <ion-item-sliding *ngFor="let edata of edocdata">
       <ion-item button (click)="godocflow(edata.DocFlowOID,edata.DocOID,edata.DocCreateByAccount)" mode='ios' animated
@@ -114,12 +117,16 @@
         </ion-label>
       </ion-item>
       <!-- side left -->
-      <ion-item-options side="start" >
-        <ion-item-option (click)="functionservice.download(edata.DocOID)"><ion-icon name="document" style="font-size: 30px"></ion-icon></ion-item-option>
+      <ion-item-options side="start">
+        <ion-item-option (click)="functionservice.download(edata.DocOID)">
+          <ion-icon name="document" style="font-size: 30px"></ion-icon>
+        </ion-item-option>
       </ion-item-options>
       <!-- side right -->
       <ion-item-options side="end">
-        <ion-item-option color="danger"><ion-icon name="trash" style="font-size: 30px"></ion-icon></ion-item-option>        
+        <ion-item-option color="danger" (click)="DeleteEdocConfirm(edata.DocOID,UserData.username)">
+          <ion-icon name="trash" style="font-size: 30px"></ion-icon>
+        </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>

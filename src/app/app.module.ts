@@ -11,6 +11,7 @@ import { FileOpener } from "@ionic-native/file-opener/ngx";
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
 import { Downloader } from '@ionic-native/downloader/ngx';
+import { FCM } from '@ionic-native/fcm/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -49,6 +50,7 @@ import { DatePipe } from '@angular/common';
     InAppBrowser,
     DocumentViewer,
     Downloader,
+    FCM,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: "th-TH" }
   ],
